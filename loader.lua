@@ -1,12 +1,12 @@
--- InsaniX Loader.lua — one-time online check, then trust local save
+-- Eclipse Loader.lua — one-time online check, then trust local save
 
 -- Services
 local HttpService = game:GetService("HttpService")
 local TweenService = game:GetService("TweenService")
 
 -- Config
-local SAVED_KEY_FILE = "insanix_key.txt"      -- presence of this file = already verified on this device
-local MAIN_HUB_URL   = "https://raw.githubusercontent.com/zachyisdabest/InsaniX/main/mainhub.lua"
+local SAVED_KEY_FILE = "eclipse_key.txt"      -- presence of this file = already verified on this device
+local MAIN_HUB_URL   = "https://raw.githubusercontent.com/zachyisdabest/Eclipse/main/mainhub.lua"
 local VERIFY_BASE    = "https://03df6bdd-28f6-44f5-b766-5bf63d614ed5-00-22hauxpzzfxdx.janeway.replit.dev/verify" -- your Replit endpoint
 
 -- File helpers
@@ -35,13 +35,13 @@ local function verify_once(key)
 
     local ok, body = pcall(function() return game:HttpGet(url) end)
     if not ok then
-        warn("[InsaniX] HTTP failed:", body)
+        warn("[Eclipse] HTTP failed:", body)
         return false, "HTTP failed"
     end
 
     local okj, data = pcall(function() return HttpService:JSONDecode(body) end)
     if not okj then
-        warn("[InsaniX] JSON decode failed")
+        warn("[Eclipse] JSON decode failed")
         return false, "Bad JSON"
     end
 
@@ -59,7 +59,7 @@ local function load_hub(ui, bar)
         bar.Visible = true; t:Play(); t.Completed:Wait()
     end
     if ui and ui.Parent then ui:Destroy() end
-    _G.InsaniXLoaded = true
+    _G.EclipseLoaded = true
     loadstring(game:HttpGet(MAIN_HUB_URL))()
 end
 
@@ -73,7 +73,7 @@ end
 local function show_ui()
     local parent = (gethui and gethui()) or game.CoreGui
     local gui = Instance.new("ScreenGui", parent)
-    gui.Name = "InsaniXLoader"
+    gui.Name = "EclipseLoader"
 
     local frame = Instance.new("Frame", gui)
     frame.Size = UDim2.new(0, 300, 0, 210)
@@ -85,7 +85,7 @@ local function show_ui()
     local title = Instance.new("TextLabel", frame)
     title.Size = UDim2.new(1,0,0,40)
     title.BackgroundTransparency = 1
-    title.Text = "InsaniX Loader"
+    title.Text = "Eclipse Loader"
     title.Font = Enum.Font.GothamBold; title.TextSize = 22
     title.TextColor3 = Color3.new(1,1,1)
 
